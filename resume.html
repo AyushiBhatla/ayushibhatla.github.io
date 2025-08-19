@@ -1,1 +1,603 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayushi Bhatla | Project Coordinator Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Slate -->
+    <!-- Application Structure Plan: A narrative, single-page scrolling experience designed for recruiters. It starts with a strong summary (Who is she?), moves to quantifiable skills (What can she do?), followed by an interactive timeline of her experience (Where has she done it?), a filterable portfolio of her work (What has she built?), and concludes with her education. This logical flow provides a comprehensive overview while allowing users to dive into details as needed, prioritizing usability and quick information retrieval. -->
+    <!-- Visualization & Content Choices: 
+        - Summary -> Text: Clear, concise introduction.
+        - Skills -> Radar Chart (Chart.js) & Cards: Goal is to provide a quick, holistic view of her skill distribution. The chart offers a "wow" factor and data-driven feel, while cards provide categorical detail. Interaction: Hover tooltips on chart.
+        - Experience -> Interactive Vertical Timeline (HTML/CSS/JS): Goal is to present chronological data engagingly. Interaction: Click to expand/collapse details, keeping the UI clean.
+        - Projects -> Filterable Grid with Modals (HTML/CSS/JS): Goal is to organize a diverse portfolio. Interaction: Users can filter by project type (Freelance, GitHub, Academic) and click to open a modal for project details, preventing clutter.
+        - Education & Certifications -> Simple Cards: Goal is to present credentials clearly without distraction.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF7;
+            color: #334155;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #0d9488;
+        }
+        .timeline-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .timeline-item-content.expanded {
+            max-height: 500px;
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="bg-white/70 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-slate-700">Ayushi Bhatla</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#summary" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Summary</a>
+                        <a href="#skills" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                        <a href="#experience" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Experience</a>
+                        <a href="#projects" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                        <a href="#publications" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Publications</a>
+                        <a href="#certifications" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Certifications</a>
+                        <a href="#education" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Education</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="summary" class="py-20 md:py-28">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-800 tracking-tight">Aspiring Project Coordinator</h1>
+                <p class="mt-6 text-lg text-slate-600 max-w-2xl mx-auto">Organized and dependable candidate with a strong foundation in project-based work, technical execution, and cross-functional collaboration. Eager to apply a positive attitude and robust project management aptitude to a dynamic tech environment.</p>
+                <div class="mt-8 flex justify-center space-x-4">
+                    <a href="mailto:abbhatla1703@gmail.com" class="bg-teal-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors">Contact via Email</a>
+                    <a href="https://www.linkedin.com/in/ayushibhatla" target="_blank" class="bg-white text-slate-700 font-medium py-2 px-4 rounded-lg border border-slate-300 hover:bg-slate-50 transition-colors">LinkedIn Profile</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-800">Core Competencies</h2>
+                    <p class="mt-4 text-lg text-slate-600">A blend of management, collaborative, and technical skills.</p>
+                </div>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-1 space-y-6">
+                        <div class="p-6 bg-slate-50 rounded-lg">
+                            <h3 class="font-bold text-slate-700">Management & Organization</h3>
+                            <p class="text-slate-600 mt-2">Project Coordination, ERP Data Entry, Record Maintenance, Timely Evaluation, Project Management. Familiar with tools like Basecamp.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg">
+                            <h3 class="font-bold text-slate-700">Collaboration & Communication</h3>
+                            <p class="text-slate-600 mt-2">Cross-functional Teamwork, Interdepartmental Collaboration, Excellent Verbal and Written Communication, Teaching & Mentoring.</p>
+                        </div>
+                         <div class="p-6 bg-slate-50 rounded-lg">
+                            <h3 class="font-bold text-slate-700">Technical Acumen</h3>
+                            <p class="text-slate-600 mt-2">Firebase, MySQL, HTML, CSS, JavaScript, Python, Web Development, IoT.</p>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 lg:col-span-2">
+                         <div class="chart-container">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-800">Professional Experience</h2>
+                    <p class="mt-4 text-lg text-slate-600">Click on each role to see details.</p>
+                </div>
+                <div id="timeline-container" class="mt-12 relative border-l-2 border-slate-200 pl-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-800">Project Portfolio</h2>
+                    <p class="mt-4 text-lg text-slate-600">A selection of academic, freelance, and personal projects.</p>
+                </div>
+                <div id="project-filters" class="mt-8 flex justify-center space-x-2">
+                </div>
+                <div id="project-grid" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-800">Publications</h2>
+                </div>
+                <div id="publications-container" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-800">Certifications</h2>
+                </div>
+                <div id="certifications-container" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-800">Education</h2>
+                </div>
+                <div id="education-container" class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Ayushi Bhatla. All rights reserved.</p>
+            <p class="text-slate-400 mt-2">Interactive resume created to showcase skills for the Project Coordinator role.</p>
+        </div>
+    </footer>
+
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50 modal-backdrop">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-content transform scale-95">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 id="modal-title" class="text-2xl font-bold text-slate-800"></h3>
+                        <p id="modal-category" class="text-sm font-medium text-teal-600 mt-1"></p>
+                    </div>
+                    <button id="modal-close-btn" class="text-slate-500 hover:text-slate-800">&times;</button>
+                </div>
+                <div id="modal-description" class="mt-4 text-slate-600 space-y-3"></div>
+                <div id="modal-links" class="mt-6 flex space-x-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = {
+                experience: [
+                    {
+                        role: 'Research Staff',
+                        company: 'Ganpat University - U. V. Patel College of Engineering',
+                        period: 'July 2025 - Present',
+                        details: [
+                            'Engaged as Research Staff for the "Precise Positioning Algorithm for Different NavIC Using Blockchain" project, in collaboration with the Indian Space Research Organisation (ISRO).',
+                            'Actively involved in project-based academic research, demonstrating the ability to manage complex tasks and work with a leading national organization.'
+                        ]
+                    },
+                    {
+                        role: 'Teaching Assistant',
+                        company: 'Ganpat University - U. V. Patel College of Engineering',
+                        period: 'August 2024 - July 2025',
+                        details: [
+                            'Managed academic operations, including ERP data entry, attendance tracking, and student record maintenance, demonstrating strong organizational and administrative skills.',
+                            'Collaborated with faculty and students to ensure smooth lab conduction and timely evaluation, highlighting teamwork and communication abilities.',
+                            'Developed and shared supplementary learning materials, which showcases an aptitude for resource creation and support, relevant for a project-based environment.'
+                        ]
+                    },
+                    {
+                        role: 'UI/UX Intern',
+                        company: 'Pixenite Pvt Ltd, Ahmedabad',
+                        period: 'January 2024 - July 2024',
+                        details: [
+                            'Collaborated with cross-functional teams to ensure the smooth integration of UI designs and functionality, proving your ability to work with diverse groups to achieve a common goal.'
+                        ]
+                    }
+                ],
+                projects: [
+                    {
+                        title: 'ISRO Collaborative Research',
+                        category: 'Academic',
+                        description: 'Currently engaged in a high-profile research project with ISRO, focusing on developing a "Precise Positioning Algorithm for Different NavIC Using Blockchain". This role involves complex problem-solving, collaboration with national experts, and rigorous project documentation.',
+                        links: {}
+                    },
+                    {
+                        title: 'Nandi—Cattle Monitoring System',
+                        category: 'Academic',
+                        description: 'Served as a key contributor in an IoT-based project for real-time cattle health monitoring. My role involved system integration, data management with Firebase Realtime Database, and ensuring project milestones were met. This demonstrates hands-on experience in project execution and management from concept to deployment.',
+                        links: {}
+                    },
+                    {
+                        title: 'Dot Branding',
+                        category: 'Freelance',
+                        description: 'Worked as a freelance developer on this web development project. This involved direct client communication, requirement gathering, and delivering the final product on schedule, showcasing end-to-end project responsibility.',
+                        links: { 'Live Site': 'https://dotbranding.in/' }
+                    },
+                    {
+                        title: 'Amazeefy',
+                        category: 'Freelance',
+                        description: 'Contributed to the development of this web project as a freelancer. This experience honed my skills in teamwork within a remote setting and adhering to project timelines and specifications.',
+                        links: { 'Live Site': 'https://amazeefy.com/' }
+                    },
+                    {
+                        title: 'Stress Stage Prediction',
+                        category: 'GitHub',
+                        description: 'Developed a machine learning project to predict stress levels from various data points. This project showcases an ability to manage a data-driven project lifecycle, from data collection and cleaning to model training and evaluation.',
+                        links: { 'GitHub Repo': 'https://github.com/AyushiBhatla/Stress-Stage-Prediction-using-Machine-Learning' }
+                    },
+                    {
+                        title: 'Diabetic Retinopathy Detection',
+                        category: 'GitHub',
+                        description: 'Led the development of a deep learning model for detecting Diabetic Retinopathy. This project demonstrates expertise in managing a complex technical project, including research, implementation of multiple models, and performance analysis.',
+                        links: { 'GitHub Repo': 'https://github.com/AyushiBhatla/Diabetic-Retinopathy-Detection-using-Deep-Learning' }
+                    },
+                    {
+                        title: 'Utility Web Apps',
+                        category: 'GitHub',
+                        description: 'Created two practical web applications: a QR Code Generator and a Text-to-Handwritten-Image converter. These projects highlight skills in rapid prototyping, front-end/back-end development, and creating user-friendly tools.',
+                        links: { 'QR Code Generator': 'https://github.com/AyushiBhatla/QR_Code-Generator', 'Text to Image': 'https://github.com/AyushiBhatla/Text_to_Handwritten_Image' }
+                    }
+                ],
+                publications: [
+                    {
+                        title: 'Real Time Cattle Health Monitoring Using IoT, ThingSpeak, and a Mobile Application',
+                        publisher: 'Medwin Publishers',
+                        date: 'Aug 2023',
+                        link: 'https://medwinpublishers.com/JEASc/real-time-cattle-health-monitoring-using-iot,-thing-speak,-and-a-mobile-application.pdf'
+                    },
+                    {
+                        title: 'Diabetic Retinopathy Detection Using Machine Learning and Deep Learning',
+                        publisher: 'Currently working',
+                        date: 'Aug 2023',
+                        link: ''
+                    }
+                ],
+                certifications: [
+                    {
+                        title: 'Introduction to Project Management: Methods & Tactics for Success',
+                        link: 'https://www.skillshare.com/en/certificates/3e8e0893-a854-4fb9-9237-a36d1d8500da?via=dashboard-certificate-card',
+                        issuer: 'Skillshare',
+                        date: 'Issued Aug 2025'
+                    },
+                    {
+                        title: 'Accelerating Deep Learning with GPUs',
+                        link: 'https://courses.cognitiveclass.ai/certificates/c8887ff65f494a91a89bba96bdcb7bb6',
+                        issuer: 'Cognitive Class',
+                        date: 'Issued Jun 2025'
+                    },
+                    {
+                        title: 'Deep Learning Fundamentals',
+                        link: 'https://courses.cognitiveclass.ai/certificates/05a6913b80bd4e2b8088ccd11b199a5a',
+                        issuer: 'Cognitive Class',
+                        date: 'Issued Jun 2025'
+                    },
+                    {
+                        title: 'Deep Learning with TensorFlow',
+                        link: 'https://courses.cognitiveclass.ai/certificates/975e850f7cfd4cdc80a7dd6dee0fe4de',
+                        issuer: 'Cognitive Class',
+                        date: 'Issued Jun 2025'
+                    },
+                    {
+                        title: 'Text Sentiment Analysis using Caikit and Hugging Face',
+                        link: 'https://courses.cognitiveclass.ai/certificates/937d7425a1ae437182cb67500d4d8a70',
+                        issuer: 'United Latino Students Association',
+                        date: 'Issued Jun 2025'
+                    },
+                    {
+                        title: 'Data Analysis with Python',
+                        link: 'https://courses.cognitiveclass.ai/certificates/3492458e7c624fe4a1bb19b4b3ab25a4',
+                        issuer: 'Cognitive Class',
+                        date: 'Issued Jan 2025'
+                    },
+                    {
+                        title: 'Data Science 101',
+                        link: 'https://courses.cognitiveclass.ai/certificates/6fc65160a04849b58e8fca14711ffda3',
+                        issuer: 'Cognitive Class',
+                        date: 'Issued Jan 2025'
+                    },
+                    {
+                        title: 'Data Visualization with Python',
+                        link: 'https://courses.cognitiveclass.ai/certificates/2701bffa2f834191a853fe71bec16e18',
+                        issuer: 'Cognitive Class',
+                        date: 'Issued Jan 2025'
+                    },
+                    {
+                        title: 'Python 101 for Data Science',
+                        link: 'https://courses.cognitiveclass.ai/certificates/5f1146546cbd42b19e3a09f628bca6ec',
+                        issuer: 'Cognitive Class',
+                        date: 'Issued Dec 2024'
+                    },
+                    {
+                        title: 'Designing with Figma Landing Page',
+                        link: 'https://skl.sh/3PXwRFv',
+                        issuer: 'Skillshare',
+                        date: 'Issued Jan 2024'
+                    },
+                    {
+                        title: 'Complete Guide to Built IOT Things from Scratch to Market',
+                        link: 'http://ude.my/UC-fe5e4046-4143-4c50-b502-3ccbdcc46cae',
+                        issuer: 'Udemy',
+                        date: 'Issued Jul 2023'
+                    },
+                    {
+                        title: 'Introduction to Cloud Computing on AWS for Beginners',
+                        link: 'http://ude.my/UC-eaba9ac5-db88-4f87-925c-716e5c6a3380',
+                        issuer: 'Udemy',
+                        date: 'Issued Jul 2023'
+                    },
+                    {
+                        title: 'FSD Workshop - Multithreading in Java simplified',
+                        link: '',
+                        issuer: 'Skill-Lync',
+                        date: 'Date not specified'
+                    }
+                ],
+                education: [
+                    {
+                        degree: 'Master of Technology, Information Technology',
+                        university: 'U.V. Patel College of Engineering, Ganpat University',
+                        period: 'July 2024 - Present',
+                        grade: 'CGPA: 9.43'
+                    },
+                    {
+                        degree: 'Bachelor of Technology, Information Technology',
+                        university: 'U.V. Patel College of Engineering, Ganpat University',
+                        period: 'July 2021 - April 2024',
+                        grade: 'CGPA: 7.25'
+                    },
+                    {
+                        degree: 'Diploma of Education, Information Technology',
+                        university: 'B. S. Patel Polytechnic, Ganpat University',
+                        period: 'May 2019 - May 2021',
+                        grade: 'Grade: 9.83'
+                    }
+                ]
+            };
+
+            const timelineContainer = document.getElementById('timeline-container');
+            data.experience.forEach(item => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'mb-8 timeline-item';
+                timelineItem.innerHTML = `
+                    <div class="absolute w-4 h-4 bg-teal-600 rounded-full -left-[9px] mt-1.5 border-2 border-white"></div>
+                    <div class="cursor-pointer">
+                        <time class="text-sm font-semibold text-slate-500">${item.period}</time>
+                        <h3 class="text-lg font-bold text-slate-800 mt-1">${item.role}</h3>
+                        <p class="text-md font-medium text-slate-600">${item.company}</p>
+                    </div>
+                    <div class="timeline-item-content">
+                        <ul class="mt-2 list-disc list-inside text-slate-600 space-y-1">
+                            ${item.details.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                timelineContainer.appendChild(timelineItem);
+                timelineItem.querySelector('.cursor-pointer').addEventListener('click', () => {
+                    timelineItem.querySelector('.timeline-item-content').classList.toggle('expanded');
+                });
+            });
+
+            const projectGrid = document.getElementById('project-grid');
+            const projectFilters = document.getElementById('project-filters');
+            const categories = ['All', ...new Set(data.projects.map(p => p.category))];
+
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.textContent = category;
+                button.className = 'px-4 py-2 text-sm font-medium rounded-full transition-colors';
+                if (category === 'All') {
+                    button.classList.add('bg-teal-600', 'text-white');
+                } else {
+                    button.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+                }
+                button.dataset.filter = category;
+                projectFilters.appendChild(button);
+            });
+            
+            const renderProjects = (filter = 'All') => {
+                projectGrid.innerHTML = '';
+                const filteredProjects = filter === 'All' ? data.projects : data.projects.filter(p => p.category === filter);
+                filteredProjects.forEach(project => {
+                    const projectCard = document.createElement('div');
+                    projectCard.className = 'bg-slate-50 rounded-lg p-6 cursor-pointer hover:shadow-lg transition-shadow';
+                    projectCard.innerHTML = `
+                        <p class="text-sm font-semibold text-teal-600">${project.category}</p>
+                        <h3 class="text-xl font-bold text-slate-800 mt-2">${project.title}</h3>
+                        <p class="text-slate-600 mt-2 h-24 overflow-hidden">${project.description.substring(0, 120)}...</p>
+                    `;
+                    projectCard.addEventListener('click', () => openModal(project));
+                    projectGrid.appendChild(projectCard);
+                });
+            };
+
+            projectFilters.addEventListener('click', e => {
+                if (e.target.tagName === 'BUTTON') {
+                    const filter = e.target.dataset.filter;
+                    document.querySelectorAll('#project-filters button').forEach(btn => {
+                        btn.classList.remove('bg-teal-600', 'text-white');
+                        btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+                    });
+                    e.target.classList.add('bg-teal-600', 'text-white');
+                    e.target.classList.remove('bg-white', 'text-slate-600');
+                    renderProjects(filter);
+                }
+            });
+            
+            renderProjects();
+            
+            const publicationsContainer = document.getElementById('publications-container');
+            data.publications.forEach(pub => {
+                const pubCard = document.createElement('div');
+                pubCard.className = 'bg-white p-6 rounded-lg border border-slate-200';
+                pubCard.innerHTML = `
+                    <h3 class="font-bold text-slate-800">${pub.title}</h3>
+                    <p class="text-slate-600 mt-1">${pub.publisher}</p>
+                    <p class="text-sm text-slate-500 mt-2">${pub.date}</p>
+                    ${pub.link ? `<a href="${pub.link}" target="_blank" class="text-teal-600 font-medium hover:underline mt-2 inline-block">View Publication →</a>` : ''}
+                `;
+                publicationsContainer.appendChild(pubCard);
+            });
+
+            const certificationsContainer = document.getElementById('certifications-container');
+            data.certifications.forEach(cert => {
+                const certCard = document.createElement('div');
+                certCard.className = 'bg-white p-6 rounded-lg border border-slate-200';
+                certCard.innerHTML = `
+                    <h3 class="font-bold text-slate-800">${cert.title}</h3>
+                    <p class="text-slate-600 mt-1">${cert.issuer}</p>
+                    <p class="text-sm text-slate-500 mt-2">${cert.date}</p>
+                    ${cert.link ? `<a href="${cert.link}" target="_blank" class="text-teal-600 font-medium hover:underline mt-2 inline-block">View Credential →</a>` : ''}
+                `;
+                certificationsContainer.appendChild(certCard);
+            });
+
+            const educationContainer = document.getElementById('education-container');
+            data.education.forEach(edu => {
+                const eduCard = document.createElement('div');
+                eduCard.className = 'bg-white p-6 rounded-lg border border-slate-200';
+                eduCard.innerHTML = `
+                    <h3 class="font-bold text-slate-800">${edu.degree}</h3>
+                    <p class="text-slate-600 mt-1">${edu.university}</p>
+                    <p class="text-sm text-slate-500 mt-2">${edu.period}</p>
+                    <p class="text-sm font-semibold text-slate-500 mt-1">${edu.grade}</p>
+                `;
+                educationContainer.appendChild(eduCard);
+            });
+
+            const modal = document.getElementById('project-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            
+            const openModal = (project) => {
+                document.getElementById('modal-title').textContent = project.title;
+                document.getElementById('modal-category').textContent = project.category;
+                document.getElementById('modal-description').innerHTML = `<p>${project.description.replace(/\n/g, '</p><p>')}</p>`;
+                const linksContainer = document.getElementById('modal-links');
+                linksContainer.innerHTML = '';
+                for (const [text, url] of Object.entries(project.links)) {
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.target = '_blank';
+                    link.className = 'text-teal-600 font-medium hover:underline';
+                    link.textContent = text + ' →';
+                    linksContainer.appendChild(link);
+                }
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    modal.querySelector('.modal-backdrop').classList.add('opacity-100');
+                    modal.querySelector('.modal-content').classList.remove('scale-95');
+                }, 10);
+            };
+
+            const closeModal = () => {
+                modal.querySelector('.modal-backdrop').classList.remove('opacity-100');
+                modal.querySelector('.modal-content').classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            };
+
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Project Management', 'Collaboration', 'Technical Implementation', 'Problem Solving', 'Web Development', 'Data Analysis'],
+                    datasets: [{
+                        label: 'Skill Distribution',
+                        data: [90, 85, 80, 88, 75, 82],
+                        backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                        borderColor: 'rgba(13, 148, 136, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(13, 148, 136, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(13, 148, 136, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(51, 65, 85, 0.2)'
+                            },
+                            grid: {
+                                color: 'rgba(51, 65, 85, 0.2)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#334155'
+                            },
+                            ticks: {
+                                backdropColor: '#FDFBF7',
+                                color: '#64748b'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
